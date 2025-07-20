@@ -1,2 +1,2 @@
 # Personal-Finance-Tracker
-This calculate our finance on daily 
+This calculate our finance on daily author:vaibhav kale
