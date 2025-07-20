@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Tracker Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('images/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            text-align: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo img {
+            width: 50px;
+            margin-right: 10px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .dashboard {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 30%;
+        }
+        .card img {
+            width: 50px;
+            margin-bottom: 10px;
+        }
+        .recent-transactions {
+            text-align: center;
+            margin: 20px;
+        }
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="Finance Tracker Logo">
+            <h1>Finance Tracker</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
+                <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="add-income.html"><i class="fas fa-dollar-sign"></i> Add Income</a></li>
+                <li><a href="add-expense.html"><i class="fas fa-money-bill"></i> Add Expense</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-line"></i> Reports</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="dashboard">
+            <div class="card balance">
+                <img src="images/balance.png" alt="Balance">
+                <h2>Balance</h2>
+                <p id="balance-amount">$0.00</p>
+            </div>
+            <div class="card income">
+                <img src="images/income.png" alt="Income">
+                <h2>Income</h2>
+                <p id="income-amount">$0.00</p>
+            </div>
+            <div class="card expense">
+                <img src="images/expense.png" alt="Expenses">
+                <h2>Expenses</h2>
+                <p id="expense-amount">$0.00</p>
+            </div>
+        </section>
+        
+        <section class="recent-transactions">
+            <h2>Recent Transactions</h2>
+            <ul id="transaction-list">
+                <li>No transactions yet.</li>
+            </ul>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Personal Finance Tracker. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reports - Finance Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #36d1dc, #5b86e5);
+      min-height: 100vh;
+    }
+    header {
+      background: #fff;
+      padding: 20px 40px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      color: #333;
+      font-weight: 600;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #5b86e5;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      color: #36d1dc;
+    }
+    main {
+      max-width: 900px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+      font-weight: 600;
+    }
+    p {
+      font-size: 18px;
+      margin: 10px 0;
+      color: #555;
+      text-align: center;
+    }
+    span {
+      font-weight: 600;
+      color: #333;
+    }
+    ul#transaction-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+    }
+    ul#transaction-list li {
+      background: #f5f5f5;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      font-size: 16px;
+      color: #333;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    ul#transaction-list li button {
+      background: #e63946;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    ul#transaction-list li button:hover {
+      background: #b32e3a;
+    }
+    .transaction-info {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Finance Tracker</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="add-income.html">Add Income</a></li>
+        <li><a href="add-expense.html">Add Expense</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Summary Report</h2>
+    <p>Total Income: <span id="total-income">₹0</span></p>
+    <p>Total Expenses: <span id="total-expenses">₹0</span></p>
+    <p>Balance: <span id="balance">₹0</span></p>
+
+    <h2>Recent Transactions</h2>
+    <ul id="transaction-list">
+      <li>No transactions yet.</li>
+    </ul>
+  </main>
+
+  <script>
+    // ✅ Load transactions from localStorage
+    let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+
+    const transactionList = document.getElementById("transaction-list");
+    const totalIncomeEl = document.getElementById("total-income");
+    const totalExpensesEl = document.getElementById("total-expenses");
+    const balanceEl = document.getElementById("balance");
+
+    function renderTransactions() {
+      transactionList.innerHTML = "";
+
+      if (transactions.length === 0) {
+        transactionList.innerHTML = "<li>No transactions yet.</li>";
+        updateSummary();
+        return;
+      }
+
+      transactions.forEach((t) => {
+        const li = document.createElement("li");
+
+        const info = document.createElement("div");
+        info.classList.add("transaction-info");
+        info.textContent = `${t.description} - ₹${t.amount.toLocaleString()}`;
+
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "Delete";
+        delBtn.onclick = () => deleteTransaction(t.id);
+
+        li.appendChild(info);
+        li.appendChild(delBtn);
+        transactionList.appendChild(li);
+      });
+
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const incomeTotal = transactions
+        .filter((t) => t.type === "income")
+        .reduce((sum, t) => sum + t.amount, 0);
+
+      const expenseTotal = transactions
+        .filter((t) => t.type === "expense")
+        .reduce((sum, t) => sum + t.amount, 0);
+
+      const balance = incomeTotal - expenseTotal;
+
+      totalIncomeEl.textContent = `₹${incomeTotal.toLocaleString()}`;
+      totalExpensesEl.textContent = `₹${expenseTotal.toLocaleString()}`;
+      balanceEl.textContent = `₹${balance.toLocaleString()}`;
+    }
+
+    // ✅ Update localStorage after deleting
+    function deleteTransaction(id) {
+      transactions = transactions.filter((t) => t.id !== id);
+      localStorage.setItem("transactions", JSON.stringify(transactions));
+      renderTransactions();
+    }
+
+    renderTransactions(); // Initial render
+  </script>
+</body>
+</html>
